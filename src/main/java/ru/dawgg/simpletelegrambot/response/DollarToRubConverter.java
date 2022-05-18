@@ -17,7 +17,7 @@ public class DollarToRubConverter implements BotResponse {
     @Override
     public String reply() {
         try {
-            return String.valueOf(converter.convertCurrency(new BigDecimal(1), Currency.USD, Currency.RUB));
+            return converter.convertCurrency(new BigDecimal(1), Currency.USD, Currency.RUB) + " рублей";
         } catch (Exception e) {
             e.printStackTrace();
         }

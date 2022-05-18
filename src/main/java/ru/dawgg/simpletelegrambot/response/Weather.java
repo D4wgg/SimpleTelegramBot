@@ -1,6 +1,8 @@
 package ru.dawgg.simpletelegrambot.response;
 
 import com.github.prominence.openweathermap.api.OpenWeatherMapClient;
+import com.github.prominence.openweathermap.api.enums.Language;
+import com.github.prominence.openweathermap.api.enums.UnitSystem;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -13,7 +15,15 @@ public class Weather implements BotResponse {
 
     @Override
     public String reply() {
-        return weatherMapClient.airPollution().current().toString();
+        com.github.prominence.openweathermap.api.model.weather.Weather weather = weatherMapClient
+                .currentWeather()
+                .single()
+                .byCityName("Moscow")
+                .language(Language.RUSSIAN)
+                .unitSystem(UnitSystem.METRIC)
+                .retrieve()
+                .asJava();
+        return weather.getTemperature() + "\n" + weather.getHumidity();
     }
 
     @Override
